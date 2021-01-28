@@ -12,39 +12,43 @@ const scrapper = async (url) => {
   await page.waitForSelector(
     'div.row.text-center > div:nth-child(2) > div.mt-3.text-center > a:nth-child(2)'
   );
-  await page.screenshot({ fullPage: true, path: 'screen.jpg' });
+  // await page.screenshot({ fullPage: true, path: 'screen.jpg' });
 
   const getPageData = async (page) => {
     const page_data = await page.evaluate(() => {
-      let video_url = 'hola';
+      let video = {};
 
       try {
         const $video = document.querySelector(
           'div.row.text-center > div:nth-child(2) > div.mt-3.text-center > a:nth-child(2)'
         );
 
-        video_url = $video.getAttribute('href');
+        video['name'] = document
+          .querySelector(
+            'div > div.row.text-center > div:nth-child(1) > h5 > small'
+          )
+          .innerText.trim();
+
+        video['url'] = $video.getAttribute('href');
       } catch (error) {}
 
-      return video_url;
+      return video;
     });
 
     return page_data;
   };
 
   const data = await getPageData(page);
-  const video_url = `https:${data}`;
+  const video = data;
 
   await browser.close();
 
-  return video_url;
+  return video;
 };
 
-async function get() {
-  const data = await scrapper(
-    'https://clips.twitch.tv/FrailFrigidPterodactylBleedPurple'
-  );
-  console.log(data);
+async function get(url) {
+  const data = await scrapper(url);
+  // console.log(data);
 }
 
 get();
