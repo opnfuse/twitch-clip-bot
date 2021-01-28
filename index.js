@@ -1,6 +1,8 @@
 const { Telegraf } = require('telegraf');
+const Telegram = require('telegraf/telegram');
 require('dotenv').config();
 const scrapper = require('./scrapper');
+const fs = require('fs');
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
@@ -19,7 +21,7 @@ bot.on('text', async (ctx) => {
     ctx.deleteMessage(id);
 
     await ctx.reply(`#${video.name}`);
-    ctx.replyWithVideo(`https:${video.url}`);
+    await ctx.replyWithVideo(`https:${video.url}`);
   } else {
     const id = ctx.message.message_id;
     const bot_id = (await ctx.reply('No es un clip de Twitch')).message_id;

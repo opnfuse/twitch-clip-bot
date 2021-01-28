@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index",
+    "dev-scrapper": "nodemon scrapper.js",
     "start": "node index"
   },
   "keywords": [],

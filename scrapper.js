@@ -1,5 +1,7 @@
 const puppeteer = require('puppeteer');
 const clipr = 'https://clipr.xyz/';
+const https = require('https');
+const fs = require('fs');
 
 const scrapper = async (url) => {
   const browser = await puppeteer.launch();
@@ -39,11 +41,10 @@ const scrapper = async (url) => {
   };
 
   const data = await getPageData(page);
-  const video = data;
 
   await browser.close();
 
-  return video;
+  return data;
 };
 
 async function get(url) {
@@ -51,6 +52,6 @@ async function get(url) {
   // console.log(data);
 }
 
-get();
+get('https://clips.twitch.tv/CogentAwkwardPigDendiFace');
 
 module.exports = scrapper;
